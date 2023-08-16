@@ -15,14 +15,15 @@ import lombok.*;
 @Setter
 
 @ToString
+@EqualsAndHashCode(callSuper = false, doNotUseGetters = true,of = "email")
 public class User extends BaseEntity {
 
 	//
-	@Column(length = 30,nullable = false)
+	@Column(length = 30)
 	private String name;
 	
 	//
-	@Column(length = 30, unique = true, nullable = false) // =>unique and not null
+	@Column(length = 30, unique = true) // =>unique and not null
 	private String email;
 	
 	//
@@ -35,7 +36,7 @@ public class User extends BaseEntity {
 	private UserRole userRole;
 	
 	//
-	@Column(length = 10,nullable = false)
+	@Column(length = 10)
 	private String mobile;	
 		
 }
