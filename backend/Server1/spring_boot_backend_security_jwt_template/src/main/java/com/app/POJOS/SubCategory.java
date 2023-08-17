@@ -1,5 +1,6 @@
 package com.app.POJOS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -20,11 +21,14 @@ public class SubCategory  extends BaseEntity{
 	// id
 	
 	// name
-	@Column(name="name",length = 20,unique = true)
+	@Column(name="name",length = 20)
 	private String subCatName;
 	
-	//
-	@OneToMany
-	@JoinColumn(name="sub_sub_cat")
-	private List<SubSubCategory> subSubCategoryId;
+//	//
+//	@OneToMany
+//	@JoinColumn(name="sub_sub_cat")
+//	private List<SubSubCategory> subSubCategoryId = new ArrayList<>();;
+	@ManyToOne
+	@JoinColumn(name="category_id")
+	private Category categoryId;
 }

@@ -1,5 +1,6 @@
 package com.app.POJOS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -23,9 +24,9 @@ public class Category extends BaseEntity{
 	@Column(name="name",length = 20,unique = true)
 	private String categoryName;
 		
-	//
-	@OneToMany(mappedBy="")
-	@JoinColumn(name="sub_cat")
-	private List<SubCategory> subCategoryId;
-	
+//	//
+//	@OneToMany(mappedBy="")
+//	@JoinColumn(name="sub_cat")
+//	private List<SubCategory> subCategoryId = new ArrayList<>();
+//	
 }

@@ -18,7 +18,13 @@ public class SubSubCategory extends BaseEntity{
 	// id
 	
 	// name
-	@Column(name="name",length = 20,unique = true)
+	@Column(name="name",length = 20)
 	private String subSubCatName;
+	
+	//
+	@ManyToOne
+	@JoinColumn(name="sub_category_id")
+	private SubCategory categoryId;
+	
 
 }
