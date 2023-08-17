@@ -1,10 +1,12 @@
 package com.app.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.app.DTO.LoginDTO;
 import com.app.DTO.UserDTO;
 import com.app.POJOS.Status;
 import com.app.POJOS.User;
@@ -24,5 +26,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	// edit employee details on id :get employee details on id API : USER POJO 
 	//							   : save API
+	
+	// loginIn of employee :
+	Optional<User> findByEmailAndPassword(String email, String password);
 
 }

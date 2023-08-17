@@ -3,6 +3,7 @@ package com.app.Service;
 import java.util.List;
 
 import com.app.DTO.ApiResponse;
+import com.app.DTO.LoginDTO;
 import com.app.DTO.UserDTO;
 import com.app.POJOS.Status;
 import com.app.POJOS.User;
@@ -25,5 +26,8 @@ public interface UserService {
 	// Edit Employee
 	// finding the empl :  User getEmployeeDetails(Long empId);
 	ApiResponse updateEmplDetails(User user);
+	
+	// login employee
+	ApiResponse loginUser(LoginDTO credentials);
 	
 }

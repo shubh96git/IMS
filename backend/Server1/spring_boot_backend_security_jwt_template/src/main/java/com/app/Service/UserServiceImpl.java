@@ -7,9 +7,12 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.app.DTO.ApiResponse;
+import com.app.DTO.LoginDTO;
 import com.app.DTO.UserDTO;
 import com.app.POJOS.Status;
 import com.app.POJOS.User;
@@ -86,7 +89,7 @@ public class UserServiceImpl implements UserService {
 		//
 		System.out.println("inside getEmployeeDetails ServiceImpl");
 		
-		// THROW CUSTOM EXCEPTION FROM HERE.
+		//TODO THROW CUSTOM EXCEPTION FROM HERE.
 		User user = userRepos.findById(empId)
 							 .orElseThrow();
 		return user;
@@ -106,6 +109,17 @@ public class UserServiceImpl implements UserService {
 		
 		//
 		return new ApiResponse("employee updation successful...");
+	}
+
+	//
+	@Override
+	public ApiResponse loginUser(LoginDTO credentials) {
+
+		//
+	    userRepos.findByEmailAndPassword(credentials.getEmail(),credentials.getPassword()).orElseThrow();
+	    
+	    //
+	    return new ApiResponse("login is successful");
 	}
 
 }

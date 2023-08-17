@@ -2,6 +2,8 @@ package com.app.Controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.DTO.ApiResponse;
+import com.app.DTO.LoginDTO;
 import com.app.DTO.UserDTO;
 import com.app.POJOS.Status;
 import com.app.POJOS.User;
 import com.app.Service.UserService;
+
 
 @RestController
 @RequestMapping("/user")
@@ -129,4 +133,14 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body(userService.updateEmplDetails(user));
 	}
 	
+  // LOGIN ACTIVITY :
+	@PostMapping("/login")
+	public ResponseEntity<?> loginEmployee(@RequestBody @Valid LoginDTO credentials){
+		
+		//
+		System.out.println("inside loginEmployee userControler");
+		
+		//
+		return ResponseEntity.status(HttpStatus.OK).body(userService.loginUser(credentials));
+	}
 }
