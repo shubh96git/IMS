@@ -19,11 +19,15 @@ import lombok.*;
 public class User extends BaseEntity {
 
 	//
-	@Column(length = 30)
-	private String name;
+	@Column(name="first_name",length = 30,nullable=false)
+	private String fName;
 	
 	//
-	@Column(length = 30, unique = true) // =>unique and not null
+	@Column(name="last_name",length = 30,nullable=false)
+	private String lName;
+	
+	//
+	@Column(length = 30, unique = true,nullable=false) // =>unique and not null
 	private String email;
 	
 	//
@@ -36,7 +40,12 @@ public class User extends BaseEntity {
 	private UserRole userRole;
 	
 	//
-	@Column(length = 10)
+	@Enumerated(EnumType.STRING) // col : varchar => enum constant name
+	@Column(name="status",length = 10)
+	private Status status;
+	
+	//
+	@Column(length = 10,nullable=false)
 	private String mobile;	
 		
 }

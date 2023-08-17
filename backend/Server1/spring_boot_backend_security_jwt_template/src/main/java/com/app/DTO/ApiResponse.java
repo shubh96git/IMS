@@ -11,7 +11,10 @@ import lombok.*;
 // Generic response from the server.
 public class ApiResponse {
 
+	// message to return to client.
 	private String message;
+	
+	// timestamp of the action.
 	private LocalDateTime timestamp;
 
 	public ApiResponse(String message) {
