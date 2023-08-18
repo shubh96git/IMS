@@ -1,6 +1,10 @@
 
 package com.app.Controller;
 
+import static org.springframework.http.MediaType.IMAGE_GIF_VALUE;
+import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
+import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
+
 import java.io.IOException;
 
 import javax.validation.Valid;
@@ -19,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.DTO.ApiResponse;
+import com.app.DTO.CartDTO;
 import com.app.DTO.ProductDTO;
 import com.app.Service.ProductService;
-import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping("/product")
@@ -94,5 +98,10 @@ public class ProductController {
 		return ResponseEntity.ok(prodService.downloadImage(productId));
 	}
 	
+	//
+	@PostMapping("/cart")
+	   public ResponseEntity<?> addToCart(CartDTO cartDto) {
+	     return ResponseEntity.status(HttpStatus.OK).body(prodService.addProductToCart(cartDto));
+	   }
 	
 }

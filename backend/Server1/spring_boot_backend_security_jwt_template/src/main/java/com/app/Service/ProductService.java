@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.DTO.ApiResponse;
+import com.app.DTO.CartDTO;
 import com.app.DTO.ProductDTO;
 
 public interface ProductService {
@@ -23,5 +24,8 @@ public interface ProductService {
 	
 	//
 	public byte[] downloadImage(Long productImageId) throws IOException;
+	
+	//
+	public ApiResponse addProductToCart(CartDTO cartDto);
 	
 }

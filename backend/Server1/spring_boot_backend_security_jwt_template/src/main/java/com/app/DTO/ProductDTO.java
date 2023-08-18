@@ -1,6 +1,7 @@
 package com.app.DTO;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class ProductDTO {
 	private String productName;
 	private double price;
 	private int quantity;
-	private int[] prodImageIds;
+	private List<Long> prodImageIds;
 	@NotNull(message = "seller id cant be null..")
 	private Long sellerId;
 	@NotNull(message = "category id cant be null..")

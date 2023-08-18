@@ -21,6 +21,7 @@ import com.app.DTO.LoginDTO;
 import com.app.DTO.UserDTO;
 import com.app.POJOS.Status;
 import com.app.POJOS.User;
+import com.app.Service.OrderService;
 import com.app.Service.UserService;
 
 
@@ -34,6 +35,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private ModelMapper mapper;
+	@Autowired
+	private OrderService orderService;
 	
  // ENDS POINTS :
  //-----------------------------------------------------------------------------------
@@ -142,5 +145,10 @@ public class UserController {
 		
 		//
 		return ResponseEntity.status(HttpStatus.OK).body(userService.loginUser(credentials));
+	}
+	
+	@GetMapping("/checkout/{empId}")
+	public ResponseEntity<?> checkOutCart(@RequestParam Long empId){
+		return ResponseEntity.status(HttpStatus.OK).body(orderService.confirmPayment(empId));
 	}
 }
