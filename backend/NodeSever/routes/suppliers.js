@@ -41,6 +41,23 @@ appForClass.get("/",(request,response)=>{
      })
 
  })
-
+ 
+ appForClass.put("/:id",(request,response)=>{
+    var query=`update suppliers set email='${request.body.email}',mobile='${request.body.mobile}',name='${request.body.name}' where id=${request.params.id} `;
+    connection.query(query,(error,result)=>
+    {
+        if(error==null)
+        {
+            var data = JSON.stringify(result);
+            response.setHeader("Content-Type","application/json");
+            response.send(data);
+        }
+        else{
+            console.log(error);
+            response.setHeader("Content-Type","application/json")
+            response.send();
+        }
+    })
+ })
 
 module.exports=appForClass;
