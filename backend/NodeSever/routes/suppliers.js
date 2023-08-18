@@ -23,5 +23,24 @@ appForClass.get("/",(request,response)=>{
         response.end();
     })
 })
-module.exports=appForClass;
+    appForClass.post("/",(request,response)=>{
+        var query=`insert into suppliers values(${request.body.id},'${request.body.email}','${request.body.mobile}','${request.body.name}')`
+        connection.query(query,(error,result)=>{
+            if(error==null)
+            {
+                var data =JSON.stringify(result)
+                response.setHeader("Content-type","application/json");
+                response.write(data);
+            }
+            else{
+                console.log(error);
+                response.setHeader("Content-Type","application/json");
+                response.write(error);
+            }
+            response.end();
+     })
 
+ })
+
+
+module.exports=appForClass;
