@@ -7,8 +7,6 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.app.DTO.ApiResponse;
@@ -37,11 +35,13 @@ public class UserServiceImpl implements UserService {
 		//
 		System.out.println("inside userService ServiceImpl" + user);
 
+		// default status of newly added employee is PENDING.
+		user.setStatus(Status.PENDING);
 		//
 		userRepos.save(user);
 
 		//
-		return new ApiResponse("Employee Added successfully..");
+		return new ApiResponse("Registration successful.....pending for ADMIN APPROVAL!!");
 	}
 
 	// getting the data of all users.

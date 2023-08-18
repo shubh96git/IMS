@@ -2,6 +2,8 @@ package com.app.POJOS;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,10 +42,9 @@ public class Product extends BaseEntity{
 	private double price;
 	
 	//
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="seller_id") // =>NOT NULL
-	@JsonProperty(access = Access.READ_ONLY)
-	private Supplier sellerId;
+	@ManyToOne
+	@JoinColumn(name="seller_id") 
+	private Supplier seller;
 	
 	//
 	@Column
@@ -51,7 +52,12 @@ public class Product extends BaseEntity{
 	private int quantity;
 	
 	//
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
+	private ProductStatus status;
+	
+	//
 	@ManyToOne
 	@JoinColumn(name = "category_id")
-	private SubSubCategory categoryId;
+	private SubSubCategory category;
 }

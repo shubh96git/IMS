@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.app.DTO.LoginDTO;
-import com.app.DTO.UserDTO;
 import com.app.POJOS.Status;
 import com.app.POJOS.User;
 import com.app.POJOS.UserRole;

@@ -15,11 +15,13 @@ import lombok.ToString;
 
 @ToString
 public class ProductDTO {
+	private Long id;
 	private String productName;
 	private double price;
+	private int quantity;
+	private int[] prodImageIds;
 	@NotNull(message = "seller id cant be null..")
 	private Long sellerId;
-	private int quantity;
 	@NotNull(message = "category id cant be null..")
 	private Long categoryId;
 }
