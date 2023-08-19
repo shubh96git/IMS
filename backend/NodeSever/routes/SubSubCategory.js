@@ -76,5 +76,27 @@ appForsubsubcategory.post("/:id",(request,response) =>{
     })
 })
 
+//EndPoint for Editing subSubcategory
+//PUT:localhost:5000/subcatgry/2/15
+appForsubsubcategory.put('/:sub_category_id/:id',(request,response) =>{
+    var query = `update sub_sub_categories set name = '${request.body.name}' where sub_category_id=${request.params.sub_category_id} and id =${request.params.id}`;
+    connection.query(query,(error,result) =>
+    {
+        if(error==null)
+        {
+            var data = JSON.stringify(result)
+            response.setHeader("Content-Type","application/json");
+            response.write(data);
+        }
+     else
+        {
+            console.log(error);
+            response.setHeader("Content-Type","application/json");
+            response.write(error);
+        }
+        response.end();
+    })
+})
+
 
 module.exports = appForsubsubcategory;
