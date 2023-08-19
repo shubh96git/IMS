@@ -34,6 +34,49 @@ var connection = mysql.createConnection({
     })
 })
 
+//EndPOint For Adding a New Category
+//POST:localhost:5000/catgry
+appForcategory.post("/",(request,response) =>{
+    var query =    `insert into categories (name) values ('${request.body.name}')`;
+    connection.query(query,(error,result) =>
+    {
+        if(error==null)
+        {
+            var data = JSON.stringify(result)
+            response.setHeader("Content-Type","application/json");
+            response.write(data);
+        }
+     else
+        {
+            console.log(error);
+            response.setHeader("Content-Type","application/json");
+            response.write(error);
+        }
+        response.end();
+    })
+})
+
+//EndPoint for Editing category
+//PUT:localhost:5000/catgry/1
+appForcategory.put("/:id",(request,response) =>{
+    var query = `update categories set name = '${request.body.name}' where id=${request.params.id}`;
+    connection.query(query,(error,result) =>
+    {
+        if(error==null)
+        {
+            var data = JSON.stringify(result)
+            response.setHeader("Content-Type","application/json");
+            response.write(data);
+        }
+     else
+        {
+            console.log(error);
+            response.setHeader("Content-Type","application/json");
+            response.write(error);
+        }
+        response.end();
+    })
+})
 
 
 

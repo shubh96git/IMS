@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Index Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</head>
+
+<body onload="GetData()" style="display: flex; flex-direction: column; justify-content: space-around; align-items: center;">
+    <div class="table-responsive table-bordered col-md-6">
+        <center>
+            <table class="table table-bordered" style="margin-top: 50px;">
+                <tr>
+                    <td>
+                        <lable class="label" style="color: black">MovieName</lable>
+                    </td>
+                    <td>
+                        <input type="text" id="movieName" placeholder="movieName">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <lable class="label" style="color: black">Director</lable>
+                    </td>
+                    <td>
+                        <input type="text" id="director" placeholder="director">
+                    </td>   
+                </tr>
+
+                <tr>
+                    <td>
+                        <lable class="label" style="color: black">Rating</lable>
+                    </td>
+                    <td>
+                        <input type="text" id="rating" placeholder="rating">
+                    </td>
+                </tr>
+            </table>
+            <button onclick="addRecord()">Submit</button>
+        </center>
+
+    <div class="table-responsive">
+<center>
+    <table id="myTable" class="table table-bordered">
+
+    </table>
+</center>
+    </div>
+
+
+
+    <script>
+        var movies = null;
+        var refTomyTable = document.getElementById("myTable");
+        var movieNameInput = document.getElementById("movieName");
+        var directorInput = document.getElementById("director");
+        var ratingInput = document.getElementById("rating");
+
+        function GetData() {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if (helper.readyState == 4 &&
+                    helper.status == 200) {
+                    movies = JSON.parse(helper.responseText);
+                    refTomyTable.innerHTML = '';
+                    movies.map((movie) => {
+                        var row =
+                        `<tr>
+                        <td>${movie.movieID}</td>
+                        <td>${movie.movieName}</td>
+                        <td>${movie.director}</td>
+                        <td>${movie.rating}</td>
+                        <td>
+                        <button class="btn btn-danger" 
+                        onclick="RemoveRecord(${movie.movieID})">
+                            Remove
+                        </button>
+                                </td>
+                        </tr>`;
+
+                        refTomyTable.innerHTML =
+                            refTomyTable.innerHTML + row;
+                    });
+                }
+            }
+            helper.open("GET", "http://127.0.0.1:5000/movie");
+            helper.send();
+        }
+
+        function addRecord() {
+            var data = {
+                movieName: movieNameInput.value,
+                director : directorInput.value,
+                rating : ratingInput.value
+            }
+
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if (helper.readyState == 4 &&
+                    helper.status == 200) {
+                        
+                    var receivedData = JSON.parse(helper.responseText);
+                    if (receivedData.affectedRows > 0) {
+                        GetData();
+                        movieNameInput.value ="";
+                        directorInput.value ="";
+                        ratingInput.value="";
+                    }
+                }
+            }
+
+            helper.open("POST", "http://127.0.0.1:5000/movie");
+            helper.setRequestHeader("Content-Type", "application/json");
+            helper.send(JSON.stringify(data));
+        }
+
+        function RemoveRecord(movieID)
+        {
+            var helper = new XMLHttpRequest();
+        helper.onreadystatechange = ()=>{
+            if(helper.readyState == 4 && 
+               helper.status == 200)
+               {
+                var receivedData = JSON.parse(helper.responseText);
+                    if (receivedData.affectedRows > 0)
+                        
+                 {
+                    GetData();
+                 }
+                 else
+                 {
+                    setMessage("Something went wrong!")
+                 }
+               }
+        };
+       
+        helper.open("DELETE", 
+                    "http://127.0.0.1:5000/movie/" + movieID);
+        helper.send()
+        }
+    </script>
+</body>
+
+</html>
