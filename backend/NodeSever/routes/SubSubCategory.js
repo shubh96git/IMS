@@ -98,5 +98,27 @@ appForsubsubcategory.put('/:sub_category_id/:id',(request,response) =>{
     })
 })
 
+//EndPoint For Deleting a SUBsubCategory
+//DELETE:localhost:5000/category/7 
+appForsubsubcategory.delete("/:sub_category_id/:id",(request,response) =>{
+    var query = `delete from sub_sub_categories where sub_category_id=${request.params.sub_category_id} and id = ${request.params.id}`;
+    connection.query(query,(error,result) =>
+    {
+        if(error==null)
+        {
+            var data = JSON.stringify(result)
+            response.setHeader("Content-Type","application/json");
+            response.write(data);
+        }
+     else
+        {
+            console.log(error);
+            response.setHeader("Content-Type","application/json");
+            response.write(error);
+        }
+        response.end();
+    })
+})
+
 
 module.exports = appForsubsubcategory;
