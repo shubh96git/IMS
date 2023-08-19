@@ -3,15 +3,14 @@ const express = require(`express`);
 const { request } = require("http");
 const mysql = require(`mysql`)
 const app = express();
-const config = require(`config`)
 const appForcategory = express.Router();
 
-var connection = mysql.createConnection({
-        host     : config.get('host'),
-        user     :  config.get('user'),
-        password :  config.get('password'),
-        database :  config.get('database')
-       });
+var connection =mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'manager',
+    database:'inventory_mgmt_system'
+});
 
        //EndPoint to get a list of All Categories
        //GET:localhost:5000/category

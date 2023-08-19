@@ -3,15 +3,14 @@ const express = require(`express`);
 const { request } = require("http");
 const mysql = require(`mysql`)
 const app = express();
-const config = require(`config`)
 const appForsubcategory = express.Router();
 
-var connection = mysql.createConnection({
-        host     : config.get('host'),
-        user     :  config.get('user'),
-        password :  config.get('password'),
-        database :  config.get('database')
-       });
+var connection =mysql.createConnection({
+    host:'localhost',
+    user:'root',
+    password:'manager',
+    database:'inventory_mgmt_system'
+});
 
 
 
