@@ -54,5 +54,27 @@ appForsubsubcategory.get("/:id",(request,response) =>{
     })
 })
 
+//EndPOint For Adding a New subSUBCategory
+//POST:localhost:5000/subsubcatgry/11
+appForsubsubcategory.post("/:id",(request,response) =>{
+    var query =    `insert into sub_sub_categories (name,sub_category_id) values ('${request.body.name}',${request.params.id})`;
+    connection.query(query,(error,result) =>
+    {
+        if(error==null)
+        {
+            var data = JSON.stringify(result)
+            response.setHeader("Content-Type","application/json");
+            response.write(data);
+        }
+     else
+        {
+            console.log(error);
+            response.setHeader("Content-Type","application/json");
+            response.write(error);
+        }
+        response.end();
+    })
+})
+
 
 module.exports = appForsubsubcategory;
