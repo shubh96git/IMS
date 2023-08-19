@@ -78,6 +78,27 @@ appForcategory.put("/:id",(request,response) =>{
     })
 })
 
+//EndPoint For Deleting a Category
+//DELETE:localhost:5000/catgry/7 
+appForcategory.delete("/:id",(request,response) =>{
+    var query = `delete from categories where id = ${request.params.id}`;
+    connection.query(query,(error,result) =>
+    {
+        if(error==null)
+        {
+            var data = JSON.stringify(result)
+            response.setHeader("Content-Type","application/json");
+            response.write(data);
+        }
+     else
+        {
+            console.log(error);
+            response.setHeader("Content-Type","application/json");
+            response.write(error);
+        }
+        response.end();
+    })
+})
 
 
 module.exports = appForcategory;
