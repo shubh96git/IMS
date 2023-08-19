@@ -13,48 +13,7 @@ var connection = mysql.createConnection({
         database :  config.get('database')
        });
 
-    //EndPoint to get a list of All SUB Categories
-    //GET:localhost:5000/subcatgry
-    appForsubcategory.get("/",(request,response) =>{
-    connection.query("select * from sub_categories",(error,result) =>
-    {
-    if(error==null)
-    {
-        var data = JSON.stringify(result)
-        response.setHeader("Content-Type","application/json");
-        response.write(data);
-    }
-    else
-    {
-        console.log(error);
-        response.setHeader("Content-Type","application/json");
-        response.write(error);
-    }
-    response.end();
-    })
-})
 
-//EndPoint to get a list of All SUBCategories  where categoryID supplied
-//GET:localhost:5000/subcatgry/2
-appForsubcategory.get("/:id",(request,response) =>{
-    var query = `select * from sub_categories where category_id=${request.params.id}`;
-    connection.query(query,(error,result) =>
-    {
-    if(error==null)
-    {
-        var data = JSON.stringify(result)
-        response.setHeader("Content-Type","application/json");
-        response.write(data);
-    }
-    else
-    {
-        console.log(error);
-        response.setHeader("Content-Type","application/json");
-        response.write(error);
-    }
-    response.end();
-    })
-})
 
 //EndPOint For Adding a New SUBCategory
 //POST:localhost:5000/subcatgry/2
@@ -78,49 +37,7 @@ appForsubcategory.post("/:id",(request,response) =>{
     })
 })
 
-//EndPoint for Editing Subcategory
-//PUT:localhost:5000/subcatgry/2/15
-appForsubcategory.put('/:category_id/:id',(request,response) =>{
-    var query = `update sub_categories set name = '${request.body.name}' where category_id=${request.params.category_id} and id =${request.params.id}`;
-    connection.query(query,(error,result) =>
-    {
-        if(error==null)
-        {
-            var data = JSON.stringify(result)
-            response.setHeader("Content-Type","application/json");
-            response.write(data);
-        }
-     else
-        {
-            console.log(error);
-            response.setHeader("Content-Type","application/json");
-            response.write(error);
-        }
-        response.end();
-    })
-})
 
-//EndPoint For Deleting a Sub_Category
-//DELETE:localhost:5000/category/7 
-appForsubcategory.delete("/:category_id/:id",(request,response) =>{
-    var query = `delete from sub_categories where category_id=${request.params.category_id} and id = ${request.params.id}`;
-    connection.query(query,(error,result) =>
-    {
-        if(error==null)
-        {
-            var data = JSON.stringify(result)
-            response.setHeader("Content-Type","application/json");
-            response.write(data);
-        }
-     else
-        {
-            console.log(error);
-            response.setHeader("Content-Type","application/json");
-            response.write(error);
-        }
-        response.end();
-    })
-})
 
 
 module.exports = appForsubcategory;
