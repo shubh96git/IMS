@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function NavigationBarAdmin() {
 
@@ -9,7 +10,9 @@ function NavigationBarAdmin() {
   const logOut = ()=>{
     debugger
     sessionStorage.clear()
-    navigate('/')
+    toast.info('Thank you for using App')
+     navigate('/')
+    
     
   }
     return ( <>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify'
 
 function Navbar({setdata,data}) {
   
@@ -10,7 +11,9 @@ function Navbar({setdata,data}) {
    const logOut = ()=>{
      debugger
      sessionStorage.clear()
+     toast.info('Thank you for using App')
      navigate('/')
+     
      
    }
 

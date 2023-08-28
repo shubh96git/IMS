@@ -23,8 +23,11 @@ function Login() {
                 }else{
 
                setUser(res.data);
+               debugger
                console.log(res.data)
                console.log("Logged in successfully");
+               sessionStorage.setItem("role",res.data.role)
+               sessionStorage.setItem("isValidUser",true)
                sessionStorage.setItem("userId", res.data.userId);
                sessionStorage.setItem("jwt",res.data.jwt)
                

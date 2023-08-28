@@ -68,7 +68,7 @@ return (
       </center>
         <div className='col-md-6 offset-md-3'>
           <div className='card'>
-            <div className='card-body'>
+            <div className='card-body card-shadow'  style={{backgroundColor:"lightgray"}}>
               <form>
                 {/* ... your existing form fields ... */}
                 <div className='mb-3'>
