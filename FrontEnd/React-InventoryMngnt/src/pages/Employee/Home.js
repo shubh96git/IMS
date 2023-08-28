@@ -11,8 +11,10 @@ function Home() {
 
 
     useEffect(() => {
+
         axios.get(`http://127.0.0.1:8080/product/allProducts`)
             .then(res =>{
+              debugger
               console.log(res.data)
               setProducts(res.data)
             } )

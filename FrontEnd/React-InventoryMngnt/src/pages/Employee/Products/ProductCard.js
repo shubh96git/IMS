@@ -55,7 +55,7 @@ useEffect(()=>{
   return (
     <div>
     
-    <div className="card">
+    <div className="card card-shadow">
       <img src={imageData} alt={product.productName} className="card-img-top"
        style={{
         maxHeight: "250px",

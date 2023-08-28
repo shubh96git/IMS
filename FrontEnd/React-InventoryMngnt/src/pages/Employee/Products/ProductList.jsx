@@ -50,7 +50,7 @@ function ProductList() {
         </td>
         <td>
         </td>
-        <table className='table table-bordered table-striped'>
+        <table style={{backgroundColor:"lightgray"}} className='table table-bordered table-striped'>
           <thead className='thead-dark'>
             <tr>
               <th>Id</th>

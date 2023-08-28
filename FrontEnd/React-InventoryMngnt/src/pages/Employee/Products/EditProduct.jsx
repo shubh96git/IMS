@@ -60,7 +60,7 @@ useEffect(() => {
 }, [])
 
 return (
-  <div className="container mt-5">
+  <div className="container mt-5" style={{backgroundColor:"lightgray"}}>
     <h2 className="mb-4">Edit Product</h2>
     <div className="row">
       <div className="col-md-6">
