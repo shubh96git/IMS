@@ -16,64 +16,68 @@ import NavigationBarEmployee from "./NavigationBarEmployee";
 import FrontPage from "./FrontPage";
 import ProductList from "./Employee/Products/ProductList";
 import AddProduct from "./Employee/Products/addProduct";
-
+import EditProduct from "./Employee/Products/EditProduct";
+import { useEffect, useState } from "react";
+import Home from "./Home";
+import Navbar from "./Navbar";
 
 function Controller() {
-  const loginStatus = true;
+  
+  
+  
     return ( 
         <div className='container-fluid'>
-          {loginStatus && <NavigationBarEmployee/> }
-          {/* {loginStatus && <NavigationBar /> } */}
+          <Navbar/>
     <div className='container'>
     <Routes>
-
         {/* home component  */}
-  <Route Exact path='/' element={<FrontPage/>} />
+        <Route path='/' element={<Login/>} />
 
-  {/* SellerListComponent */}
-  <Route path='/supplier' element={<SellerList/>} />
+                {/* employee default */}
+                <Route Exact path="/shop" element={<Home/>}/>
+                {/* home component  */}
+                <Route Exact path='/home' element={<FrontPage/>} />
 
-  {/* AddSellerComponent */}
-  <Route path='/supplier/addSupplier' element={<AddSupplier/>} />
+                {/* SellerListComponent */}
+                <Route path='/supplier' element={<SellerList/>} />
 
-  {/* AddSellerAddressComponent */}
-  {/* <Route path='/' element={<AddSupplierAddrs/>} /> */}
+                {/* AddSellerComponent */}
+                <Route path='/supplier/addSupplier' element={<AddSupplier/>} />
 
-  {/* CategoryListComponent */}
-  <Route path='/category' element={<CategoryList/>} />
+                {/* AddSellerAddressComponent */}
+                {/* <Route path='/' element={<AddSupplierAddrs/>} /> */}
 
-  {/* AddCategoryComponent */}
-  <Route path='/addCategory' element={<AddCategory/>} />
+                {/* CategoryListComponent */}
+                <Route path='/category' element={<CategoryList/>} />
 
-  {/* SubCategoryListComponent */}
-  <Route path='/subcategory' element={<SubCategoryList/>} />
+                {/* AddCategoryComponent */}
+                <Route path='/addCategory' element={<AddCategory/>} />
 
-  {/* AddSubCategoryComponent */}
-  <Route path='/addSubCategory' element={<AddSubCategory/>} />
+                {/* SubCategoryListComponent */}
+                <Route path='/subcategory' element={<SubCategoryList/>} />
 
-    {/* SubSubCategoryListComponent */}
-  <Route path='/subsubcategory' element={<SubSubCategoryList/>} />
+                {/* AddSubCategoryComponent */}
+                <Route path='/addSubCategory' element={<AddSubCategory/>} />
 
-  {/* AddSubSubCategoryComponent */}
-  <Route path='/addSubSubCategory' element={<AddSubSubCategory/>} />
+                  {/* SubSubCategoryListComponent */}
+                <Route path='/subsubcategory' element={<SubSubCategoryList/>} />
 
-  {/* User/EmployeeListComponent */}
-  <Route path='/emps' element={<UserList/>} />
+                {/* AddSubSubCategoryComponent */}
+                <Route path='/addSubSubCategory' element={<AddSubSubCategory/>} />
 
-  {/* AddUser/EmployeeComponent */}
-  <Route path='/addUSer' element={<AddUser/>} />
+                {/* User/EmployeeListComponent */}
+                <Route path='/allEmployees' element={<UserList/>} />
 
-  {/* ProductListComponent */}
-  <Route path='/product' element={<ProductList/>} />
+                {/* AddUser/EmployeeComponent */}
+                <Route path='/addUSer' element={<AddUser/>} />
 
-{/* AddUser/EmployeeComponent */}
-<Route path='/addProduct' element={<AddProduct/>} />
+                {/* ProductListComponent */}
+                <Route path='/allProduct' element={<ProductList/>} />
 
-  {/* home component  */}
-  <Route path='/' element={<Login/>} />
+              {/* AddUser/EmployeeComponent */}
+              <Route path='/addProduct' element={<AddProduct/>} />
 
-
-
+              <Route path='/product/edit/:productId' element={<EditProduct/>} />
     </Routes>
   </div> 
   </div> );

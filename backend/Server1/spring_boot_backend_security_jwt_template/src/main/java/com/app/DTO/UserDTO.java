@@ -12,8 +12,9 @@ import lombok.*;
 @ToString
 public class UserDTO {
 	
-	private String fName;
-	private String lName;
+	private Long id;
+	private String firstName;
+	private String lastName;
 	private String email;
 	private String mobile;	
 }

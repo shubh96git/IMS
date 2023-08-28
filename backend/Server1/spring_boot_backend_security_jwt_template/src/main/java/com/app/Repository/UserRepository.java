@@ -25,6 +25,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	// edit employee details on id :get employee details on id API : USER POJO 
 	//							   : save API
 	
+	Optional<User> findByEmail(String email);
+	
 	// loginIn of employee :
 	Optional<User> findByEmailAndPassword(String email, String password);
 

@@ -1,12 +1,35 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react';
-
+import axios from 'axios';
 function ProductList() {
 
-    const [products, setProduct] = useState([]);
+  //
+  const [products, setProduct] = useState([]);
+  const navigate = useNavigate();
+    
 
+  //
+  useEffect(()=>{
+    // userId and sellerId must be same
+    axios.get("http://127.0.0.1:8080/product/allProducts/"+sessionStorage.getItem("userId"))
+    .then((result) =>{
+      console.log(result.data)
+      setProduct(result.data)
+    })
+    .catch(err => console.log("err occured"))
+  },[])
+
+  //
+  const deleteProduct = (productId)=>{
+    axios.get("http://127.0.0.1:8080/product/delete/"+productId)
+          .then(res=>{
+            console.log(res.data)
+            navigate("/allProduct")
+          })
+          .catch(err => console.log(err))
+  }
     return (
-            <div className='container'>
+      <div className='container'>
       <h3>List of Categories</h3>
       <hr />
       <div>
@@ -14,6 +37,8 @@ function ProductList() {
         <Link to='/addProduct' className='btn btn-primary mb-2'>
           Add Product
         </Link>
+        </td>
+        <td>
         </td>
         <table className='table table-bordered table-striped'>
           <thead className='thead-dark'>
@@ -27,29 +52,24 @@ function ProductList() {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>{product.name}</td>
+            {products.filter(product => product.status === "ADDED")
+                .map(product => (
+                  <tr key={product.id}>
+                <td>{product.id}</td>
+                <td>{product.productName}</td>
                 <td>{product.price}</td>
                 <td>{product.quantity}</td>
-                <td>{product.category_id}</td>
+                <td>{product.categoryId}</td>
                 <td>
-                  <Link
-                    className='btn btn-info'
-                    to={`/product/edit/${product.id}`}
-                  >
-                    Update
-                  </Link>
+                <input className='btn btn-outline-primary ml-2' type='button' 
+                  value="UPDATE" onClick={()=>{navigate('/product/edit/'+product.id)}} />
                 </td>
                 <td>
-                  <button
-                    className='btn btn-danger ml-2'
-                  >
-                    Delete
-                  </button>
+                <input className='btn btn-outline-danger ml-2' type='button' 
+                  value="DELETE" onClick={() => deleteProduct(product.id)} />
                 </td>
               </tr>
-            ))}
+                ))}
           </tbody>
         </table>
       </div>

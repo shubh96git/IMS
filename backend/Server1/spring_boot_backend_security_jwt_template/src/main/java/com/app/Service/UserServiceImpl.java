@@ -7,15 +7,20 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.DTO.ApiResponse;
 import com.app.DTO.LoginDTO;
 import com.app.DTO.UserDTO;
+import com.app.POJOS.Cart;
 import com.app.POJOS.Status;
 import com.app.POJOS.User;
 import com.app.POJOS.UserRole;
+import com.app.Repository.CartRepository;
 import com.app.Repository.UserRepository;
+import com.app.customException.ResourceNotFoundException;
 
 @Service
 @Transactional
@@ -24,6 +29,11 @@ public class UserServiceImpl implements UserService {
  // DEPENDANCY SECTION :
 	@Autowired
 	private UserRepository userRepos;
+	@Autowired
+	private CartRepository cartRepos;
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	@Autowired
 	private ModelMapper mapper;
 
@@ -37,6 +47,10 @@ public class UserServiceImpl implements UserService {
 
 		// default status of newly added employee is PENDING.
 		user.setStatus(Status.PENDING);
+		user.setPassword(encoder.encode(user.getPassword()));
+		user.setUserRole(UserRole.EMPLOYEE);
+		
+//		System.out.println("in service =>"+user);
 		//
 		userRepos.save(user);
 
@@ -113,13 +127,46 @@ public class UserServiceImpl implements UserService {
 
 	//
 	@Override
-	public ApiResponse loginUser(LoginDTO credentials) {
+	public User loginUser(LoginDTO credentials) {
 
 		//
-	    userRepos.findByEmailAndPassword(credentials.getEmail(),credentials.getPassword()).orElseThrow();
+	   return userRepos.findByEmailAndPassword(credentials.getEmail(),credentials.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Invalid Dept Id !!!!")	);
 	    
-	    //
-	    return new ApiResponse("login is successful");
 	}
 
+	//
+	@Override
+	public List<Cart> getCart(Long empId){
+		
+		//
+		User employee = userRepos.findById(empId).orElseThrow();
+		
+		//
+		return cartRepos.findByUser(employee);
+	}
+	
+	
+	@Override
+	public User authenitcateUser(String email) {
+		
+		return userRepos.findByEmail(email)
+				.orElseThrow(()-> new RuntimeException("Invalid Email"));
+	}
+
+
+	@Override
+	public UserDTO findUserById(Long userId) {
+		User user = userRepos.findById(userId)
+				.orElseThrow(()-> new RuntimeException("Invalid User Id"));
+		
+		UserDTO userDTO = mapper.map(user, UserDTO.class);
+		return userDTO;
+	}
+	@Override
+	public Long findUserId(String userName) {
+		User user = userRepos.findByEmail(userName)
+				.orElseThrow(()-> new RuntimeException("Invalid Email"));
+		
+		return user.getId();
+	}
 }
