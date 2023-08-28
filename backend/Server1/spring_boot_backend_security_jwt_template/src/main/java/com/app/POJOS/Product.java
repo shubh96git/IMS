@@ -36,7 +36,6 @@ public class Product extends BaseEntity{
 	
 	//
 	@Column(nullable = false) 
-	@Range(min=0)
 	private double price;
 	
 	//
@@ -49,7 +48,6 @@ public class Product extends BaseEntity{
 
 	//
 	@Column
-	@Range(min=1)
 	private Long quantity;
 	
 	//

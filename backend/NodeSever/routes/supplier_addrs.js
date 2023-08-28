@@ -7,8 +7,9 @@ var connection =mysql.createConnection({
     password:'manager',
     database:'inventory_mgmt_system'
 });
-appForClass.get("/",(request,response)=>{
-    connection.query("select * from supplier_addrs",(error,result)=>{
+appForClass.get("/:id",(request,response)=>{
+    var query = `select * from supplier_addrs where id = ${request.params.id}`;
+    connection.query(query,(error,result)=>{
         if(error==null)
         {
             var data = JSON.stringify(result)
@@ -24,7 +25,8 @@ appForClass.get("/",(request,response)=>{
     })
 })
     appForClass.post("/",(request,response)=>{
-        var query=`insert into supplier_addrs values(${request.body.id},'${request.body.adr_line1}','${request.body.adr_line2}','${request.body.city}','${request.body.country}',
+        var query=`insert into supplier_addrs (adr_line1 ,adr_line2,city,country,state,zip_code ,supplier_id) 
+        values('${request.body.adr_line1}','${request.body.adr_line2}','${request.body.city}','${request.body.country}',
         '${request.body.state}','${request.body.zip_code}',${request.body.supplier_id})`;
         connection.query(query,(error,result)=>{
             if(error==null)

@@ -20,6 +20,7 @@ import com.app.Repository.OrderDetailRepository;
 import com.app.Repository.OrderRepository;
 import com.app.Repository.ProductRepository;
 import com.app.Repository.UserRepository;
+import com.app.customException.ResourceNotFoundException;
 
 @Service
 @Transactional
@@ -35,11 +36,14 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	private OrderRepository orderRepos;
 	@Autowired
+	private OrderDetailRepository orderDetailsRepos;
+	@Autowired
 	private ProductRepository prodRepos;
 	
 	@Override
 	  public ApiResponse confirmPayment(Long id) {
 	    
+		System.out.println("in confirm payement");
 	    User user = userRepos.findById(id).orElseThrow();
 	    
 	    List<Cart> carts = cartRepos.findByUser(user);
@@ -62,9 +66,10 @@ public class OrderServiceImpl implements OrderService{
 	    order.setOrderDate(LocalDate.now());
 	    
 	    Order savedOrder = orderRepos.save(order);
-	   // System.out.println("sed ->" + savedOrder.getId());
+	    System.out.println("sed ->" + savedOrder.getId());
 	    
 	    for(int i=0; i<carts.size(); i++) {
+	    
 	      OrderDetail orderDetail = new OrderDetail();
 	      orderDetail.setOrder(savedOrder);
 	      orderDetail.setProduct(products.get(i));
@@ -76,4 +81,30 @@ public class OrderServiceImpl implements OrderService{
 	    
 	    return new ApiResponse("Order placed successfully");
 	  }
+	
+	@Override
+	public List<Order> getOrders(Long userId){
+		
+		//
+		User user = userRepos.findById(userId).orElseThrow(()->new ResourceNotFoundException("invalid id"));
+		
+		//
+		return orderRepos.findAllByEmployee(user);
+	}
+	
+	@Override
+	public List<OrderDetail> getAllOrderDetails(Long orderId){
+		
+		//
+		Order order=orderRepos.findById(orderId).orElseThrow(()->new ResourceNotFoundException("invalid id"));
+		
+		//
+		return orderDetailsRepos.findAllByOrder(order);
+	}
+	
+	
+	
+	
+	
+	
 }

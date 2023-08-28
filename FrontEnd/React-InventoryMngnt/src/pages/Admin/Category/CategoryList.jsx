@@ -1,11 +1,28 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import axios from 'axios'
+import NavigationBarAdmin from "../NavigationBarAdmin"
 
 function CategoryList() {
 
     const [categories, setCategories] = useState([]);
 
+    useEffect(() => {
+      fetchCategoryList();
+    }, []);
+
+    const fetchCategoryList = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:9999/catgry'); 
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching Category data:', error);
+      }
+    };
+
     return (
+      <div className='container-fluid'>
+      { <NavigationBarAdmin /> }  
             <div className='container'>
       <h3>List of Categories</h3>
       <hr />
@@ -30,35 +47,21 @@ function CategoryList() {
             <tr>
               <th>Id</th>
               <th>Name</th>
-              <th colSpan={3}>Actions</th>
+              {/* <th colSpan={3}>Actions</th> */}
             </tr>
           </thead>
           <tbody>
-            {categories.map((employee) => (
-              <tr key={categories.id}>
-                <td>{categories.name}</td>
-                <td>
-                  <Link
-                    className='btn btn-info'
-                    to={`/category/edit/${categories.id}`}
-                  >
-                    Update
-                  </Link>
-                </td>
-                <td>
-                  <button
-                    className='btn btn-danger ml-2'
-                  >
-                    Delete
-                  </button>
-                </td>
+            {categories.map((category) => (
+              <tr key={category.id}>
+                <td>{category.id}</td>
+                <td>{category.name}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </div>
-      );
+    </div> );
 }
 
 export default CategoryList;

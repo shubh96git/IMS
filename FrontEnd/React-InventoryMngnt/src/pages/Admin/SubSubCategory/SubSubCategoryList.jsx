@@ -1,11 +1,29 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import NavigationBarAdmin from '../NavigationBarAdmin';
+
 
 function SubSubCategoryList() {
 
     const [subsubcategories, setsubsubCategories] = useState([]);
 
+    useEffect(() => {
+      fetchSubSubCategoryList();
+    }, []);
+
+    const fetchSubSubCategoryList = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:9999/subsubcatgry'); 
+        setsubsubCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching SubSubCategory data:', error);
+      }
+    };
+
     return (
+      <div className='container-fluid'>
+      { <NavigationBarAdmin /> } 
             <div className='container'>
       <h3>List of Sub-Sub-Categories</h3>
       <hr />
@@ -30,35 +48,20 @@ function SubSubCategoryList() {
             <tr>
               <th>Id</th>
               <th>Name</th>
-              <th colSpan={3}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {subsubcategories.map((employee) => (
-              <tr key={subsubcategories.id}>
-                <td>{subsubcategories.name}</td>
-                <td>
-                  <Link
-                    className='btn btn-info'
-                    to={`/subsubcategory/edit/${subsubcategories.id}`}
-                  >
-                    Update
-                  </Link>
-                </td>
-                <td>
-                  <button
-                    className='btn btn-danger ml-2'
-                  >
-                    Delete
-                  </button>
-                </td>
+            {subsubcategories.map((subsubcat) => (
+              <tr key={subsubcat.id}>
+                <td>{subsubcat.id}</td>
+                <td>{subsubcat.name}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </div>
-      );
+    </div>  );
 }
 
 export default SubSubCategoryList;

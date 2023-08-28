@@ -1,11 +1,28 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import axios from 'axios'
+import NavigationBarAdmin from '../NavigationBarAdmin';
 
 function SubCategoryList() {
 
     const [subcategories, setsubCategories] = useState([]);
 
+
+    useEffect(() => {
+      fetchSubCategoryList();
+    }, []);
+
+    const fetchSubCategoryList = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:9999/subcatgry'); 
+        setsubCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching SubCategory data:', error);
+      }
+    };
     return (
+      <div className='container-fluid'>
+      { <NavigationBarAdmin /> } 
             <div className='container'>
       <h3>List of Sub-Categories</h3>
       <hr />
@@ -30,35 +47,21 @@ function SubCategoryList() {
             <tr>
               <th>Id</th>
               <th>Name</th>
-              <th colSpan={3}>Actions</th>
+              {/* <th colSpan={3}>Actions</th> */}
             </tr>
           </thead>
           <tbody>
-            {subcategories.map((employee) => (
-              <tr key={subcategories.id}>
-                <td>{subcategories.name}</td>
-                <td>
-                  <Link
-                    className='btn btn-info'
-                    to={`/subcategory/edit/${subcategories.id}`}
-                  >
-                    Update
-                  </Link>
-                </td>
-                <td>
-                  <button
-                    className='btn btn-danger ml-2'
-                  >
-                    Delete
-                  </button>
-                </td>
+            {subcategories.map((subcatgory) => (
+              <tr key={subcatgory.id}>
+                <td>{subcatgory.id}</td>
+                <td>{subcatgory.name}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
     </div>
-      );
+    </div>  );
 }
 
 export default SubCategoryList;

@@ -130,6 +130,7 @@ public class UserServiceImpl implements UserService {
 	public User loginUser(LoginDTO credentials) {
 
 		//
+		
 	   return userRepos.findByEmailAndPassword(credentials.getEmail(),credentials.getPassword()).orElseThrow(() -> new ResourceNotFoundException("Invalid Dept Id !!!!")	);
 	    
 	}

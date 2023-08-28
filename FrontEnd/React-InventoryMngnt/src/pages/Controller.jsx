@@ -1,86 +1,99 @@
-import Login from "./Login";
+import Login from "../pages/SignIn-SignUp/Login";
 import { Route, Routes } from 'react-router-dom'
-import NavigationBar from "./NavigationBar";
-import AddSupplier from "./Admin/Supplier/addSupplier";
-import AddSupplierAddrs from "./Admin/Supplier/addSupplierAdrs";
-import SellerList from "./Admin/Supplier/supplierList";
-import CategoryList from "./Admin/Category/CategoryList";
-import AddCategory from "./Admin/Category/addCategory";
-import SubCategoryList from "./Admin/SubCategory/SubCategoryList";
-import AddSubCategory from "./Admin/SubCategory/addSubCategory";
-import SubSubCategoryList from "./Admin/SubSubCategory/SubSubCategoryList";
-import AddSubSubCategory from "./Admin/SubSubCategory/addSubSubCategory";
-import UserList from "./Admin/Users/Users";
-import AddUser from "./Admin/Users/AddUser";
-import NavigationBarEmployee from "./NavigationBarEmployee";
-import FrontPage from "./FrontPage";
 import ProductList from "./Employee/Products/ProductList";
 import AddProduct from "./Employee/Products/addProduct";
 import EditProduct from "./Employee/Products/EditProduct";
-import { useEffect, useState } from "react";
-import Home from "./Home";
-import Navbar from "./Navbar";
+import Home from "../pages/Employee/Home"
+import Cart from "../pages/Employee/Products/Cart"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Orders from "./Orders";
+
+import AddSupplier from "../pages/Admin/Supplier/addSupplier"
+import SellerList from "../pages/Admin/Supplier/supplierList";
+import CategoryList from "../pages/Admin/Category/CategoryList";
+import AddCategory from "../pages/Admin/Category/addCategory";
+import SubCategoryList from "../pages/Admin/SubCategory/SubCategoryList";
+import AddSubCategory from "../pages/Admin/SubCategory/addSubCategory";
+import SubSubCategoryList from "../pages/Admin/SubSubCategory/SubSubCategoryList";
+import AddSubSubCategory from "../pages/Admin/SubSubCategory/addSubSubCategory";
+import UserList from "../pages/Admin/Users/Users";
+import AddUser from "../pages/Admin/Users/AddUser";
+import UserListApproved from "../pages/Admin/Users/UsersApproved"
+import UserListPending from "../pages/Admin/Users/UsersPending"
+import UserListRemoved from "../pages/Admin/Users/UsersRemoved"
+
 
 function Controller() {
   
   
-  
     return ( 
-        <div className='container-fluid'>
-          <Navbar/>
-    <div className='container'>
-    <Routes>
-        {/* home component  */}
-        <Route path='/' element={<Login/>} />
+        <>
+         <div className='container'>
+            <Routes>
+              {/* LOGIN ROUTE */}
+              {/* home component  */}
+              <Route path='/' element={<Login/>} />
 
+              {/* EMPLOYEE ROUTES */}
+              {/* APPLY FOR EMPLOYEE */}
+              {/* AddUser/EmployeeComponent */}
+              <Route path='/addUser' element={<AddUser/>} />
+
+              {/* PRODUCT  */}
                 {/* employee default */}
                 <Route Exact path="/shop" element={<Home/>}/>
-                {/* home component  */}
-                <Route Exact path='/home' element={<FrontPage/>} />
+                {/* ProductListComponent */}
+                <Route path='/allProduct' element={<ProductList/>} />
+                {/* cart */}
+                <Route path="/cart" element={<Cart/>}/>
+                {/* edit product */}
+                <Route path='/product/edit/:productId' element={<EditProduct/>} />
+                {/* Add product */}
+                <Route path='/addProduct' element={<AddProduct/>} />
+                {/* Orders */}
+                <Route path='/orders' element={<Orders/>}/>
 
-                {/* SellerListComponent */}
-                <Route path='/supplier' element={<SellerList/>} />
+              
+                  
+              {/* ADMIN ROUTES */}
 
-                {/* AddSellerComponent */}
-                <Route path='/supplier/addSupplier' element={<AddSupplier/>} />
+              {/* EMPLYOEE MGMT */}
+                {/* User/EmployeeListComponent */}
+                <Route path='/emps' element={<UserList/>} />
+                {/* PENDING User/EmployeeComponent */}
+                <Route path='/pendingUser' element={<UserListPending/>} />
+                {/* REMOVED USER/EmployeeComponent */}
+                <Route path='/removedUser' element={<UserListRemoved/>} />
+                {/* REMOVED USER/EmployeeComponent */}
+                <Route path='/approvedUser' element={<UserListApproved/>} />
 
-                {/* AddSellerAddressComponent */}
-                {/* <Route path='/' element={<AddSupplierAddrs/>} /> */}
-
+              {/* PRODUCT MGMT */}
                 {/* CategoryListComponent */}
                 <Route path='/category' element={<CategoryList/>} />
-
                 {/* AddCategoryComponent */}
                 <Route path='/addCategory' element={<AddCategory/>} />
-
                 {/* SubCategoryListComponent */}
                 <Route path='/subcategory' element={<SubCategoryList/>} />
-
                 {/* AddSubCategoryComponent */}
                 <Route path='/addSubCategory' element={<AddSubCategory/>} />
-
-                  {/* SubSubCategoryListComponent */}
+                {/* SubSubCategoryListComponent */}
                 <Route path='/subsubcategory' element={<SubSubCategoryList/>} />
-
                 {/* AddSubSubCategoryComponent */}
                 <Route path='/addSubSubCategory' element={<AddSubSubCategory/>} />
 
-                {/* User/EmployeeListComponent */}
-                <Route path='/allEmployees' element={<UserList/>} />
+              {/* SELLER MGMT */}
+                {/* SellerListComponent */}
+                <Route path='/supplier' element={<SellerList/>} />
+                {/* AddSellerComponent */}
+                <Route path='/supplier/addSupplier' element={<AddSupplier/>} />
 
-                {/* AddUser/EmployeeComponent */}
-                <Route path='/addUSer' element={<AddUser/>} />
-
-                {/* ProductListComponent */}
-                <Route path='/allProduct' element={<ProductList/>} />
-
-              {/* AddUser/EmployeeComponent */}
-              <Route path='/addProduct' element={<AddProduct/>} />
-
-              <Route path='/product/edit/:productId' element={<EditProduct/>} />
-    </Routes>
-  </div> 
-  </div> );
+          
+                      
+            </Routes>
+          </div> 
+          <ToastContainer/>
+        </>);
 }
 
 export default Controller;

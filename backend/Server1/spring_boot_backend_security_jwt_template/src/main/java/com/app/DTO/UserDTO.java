@@ -1,10 +1,11 @@
 package com.app.DTO;
 
-import java.io.Serializable;
+import com.app.POJOS.Status;
 
-import com.app.POJOS.UserRole;
-
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -17,4 +18,5 @@ public class UserDTO {
 	private String lastName;
 	private String email;
 	private String mobile;	
+	private Status status;
 }

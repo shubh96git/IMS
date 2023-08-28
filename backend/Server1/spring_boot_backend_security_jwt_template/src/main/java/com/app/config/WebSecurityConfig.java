@@ -42,7 +42,17 @@ public class WebSecurityConfig {
 		}).
 		and().
 		authorizeRequests()
+		.antMatchers("/user/allUsers").permitAll()
+		.antMatchers("/user/allActiveEmpl").permitAll()
+		.antMatchers("/user/allPendingEmpl").permitAll()
+		.antMatchers("/user/allRemovedEmpl").permitAll()
+		.antMatchers("/user/addEmpl").permitAll()
+		.antMatchers("/user/orders/**").permitAll()
+		.antMatchers("/user/orderDetails/**").permitAll()
 		.antMatchers("/product/**").permitAll()
+		.antMatchers("/product/remCart/**").permitAll()
+		.antMatchers("/user/checkout/**").permitAll()
+		.antMatchers("/user/getCart/**").permitAll()
 		.antMatchers("/admin/**").hasRole("ADMIN")
 		.antMatchers("/user/**").hasRole("USER")
 		.antMatchers("/security/**").hasRole("SECURITY")

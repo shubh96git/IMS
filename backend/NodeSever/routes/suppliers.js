@@ -24,7 +24,7 @@ appForClass.get("/",(request,response)=>{
     })
 })
     appForClass.post("/",(request,response)=>{
-        var query=`insert into suppliers values(${request.body.id},'${request.body.email}','${request.body.mobile}','${request.body.name}')`
+        var query=`insert into suppliers (email,mobile,name,status) values('${request.body.email}','${request.body.mobile}','${request.body.name}','PENDING')`
         connection.query(query,(error,result)=>{
             if(error==null)
             {
@@ -44,6 +44,24 @@ appForClass.get("/",(request,response)=>{
  
  appForClass.put("/:id",(request,response)=>{
     var query=`update suppliers set email='${request.body.email}',mobile='${request.body.mobile}',name='${request.body.name}' where id=${request.params.id} `;
+    connection.query(query,(error,result)=>
+    {
+        if(error==null)
+        {
+            var data = JSON.stringify(result);
+            response.setHeader("Content-Type","application/json");
+            response.send(data);
+        }
+        else{
+            console.log(error);
+            response.setHeader("Content-Type","application/json")
+            response.send();
+        }
+    })
+ })
+
+ appForClass.put("/approve/:id",(request,response)=>{
+    var query=`update suppliers set status='APPROVED' where id=${request.params.id} `;
     connection.query(query,(error,result)=>
     {
         if(error==null)
