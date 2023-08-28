@@ -58,9 +58,14 @@ function AddProduct() {
 }
 return (
     <div className='container'>
-      <h3>Add Product</h3>
+      <div>
+        <a className='btn btn-primary' style={{marginTop:"10px"}} href='/allProduct'>BACK TO LIST</a>
+      </div>
       <hr />
       <div className='row'>
+      <center>
+      <h1 className=''>Add Product</h1>
+      </center>
         <div className='col-md-6 offset-md-3'>
           <div className='card'>
             <div className='card-body'>

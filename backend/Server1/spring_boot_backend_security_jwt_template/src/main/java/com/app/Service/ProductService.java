@@ -43,9 +43,15 @@ public interface ProductService {
 	
 	//
 	ApiResponse describeProduct(ProductDescDTO description);
+	ProductDescription getDescription(Long prodId);
 
+	//
 	List<ProductDTO> getProductsBySellerId(Long sellerId);
 	
+	//
 	List<ProductDTO> getAllProduct();
+
+	//
+	ApiResponse removeProductFromCart(Long cartId);
 	
 }

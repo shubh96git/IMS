@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.DTO.AuthRequest;
 import com.app.DTO.AuthResp;
+import com.app.POJOS.User;
+import com.app.Repository.UserRepository;
 import com.app.Service.UserService;
+import com.app.customException.ResourceNotFoundException;
 import com.app.jwt_utils.JwtUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +39,8 @@ public class SignInSignUpController {
 	//dep : user service for handling users
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRepository userRepos;
 
 	// add a method to authenticate user . In case of success --send back token , o.w
 	// send back err mesg
@@ -56,8 +61,10 @@ public class SignInSignUpController {
 			String role = utils.getUserRoleFromJwtToken(jwtToken);
 			
 			Long id = userService.findUserId(userName);
+			User user = userRepos.findById(id).orElseThrow(()->new ResourceNotFoundException("inavalid id"));
+			String status = user.getStatus().name();
 			
-			return ResponseEntity.ok(new AuthResp("Auth successful!", jwtToken, role, id));
+			return ResponseEntity.ok(new AuthResp("Auth successful!", jwtToken, role, id,status));
 		} catch (BadCredentialsException e) { // lab work : replace this by a method in global exc handler
 			// send back err resp code
 			System.out.println("err "+e);

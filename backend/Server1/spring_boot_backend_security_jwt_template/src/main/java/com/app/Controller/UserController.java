@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -153,14 +154,28 @@ public class UserController {
 	}
 	
 	//
-	@GetMapping("/checkout/{empId}")
-	public ResponseEntity<?> checkOutCart(@RequestParam Long empId){
-		return ResponseEntity.status(HttpStatus.OK).body(orderService.confirmPayment(empId));
+	@GetMapping("/checkout/{id}")
+	public ResponseEntity<?> checkOutCart(@PathVariable Long id){
+		System.out.println("in checkout"+id);
+		return ResponseEntity.status(HttpStatus.OK).body(orderService.confirmPayment(id));
 	}
 	
 	//
 	@GetMapping("/getCart/{id}")
-	public List<Cart> getCart(@RequestParam Long empid){
-			return userService.getCart(empid);
+	public List<Cart> getCart(@PathVariable Long id){
+		System.out.println(id);
+			return userService.getCart(id);
 	}
+	
+	//
+	@GetMapping("/orders/{userId}")
+	  public ResponseEntity<?> getAllOrders(@PathVariable Long userId) {
+	    return ResponseEntity.status(HttpStatus.OK).body(orderService.getOrders(userId));
+	  }
+	  
+	  @GetMapping("/orderDetails/{orderId}")
+	  public ResponseEntity<?> getOrderDetails(@PathVariable Long orderId) {
+	    System.out.println("in orderDetails");
+	    return ResponseEntity.status(HttpStatus.OK).body(orderService.getAllOrderDetails(orderId));
+	  }
 }

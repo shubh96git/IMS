@@ -23,7 +23,6 @@ import com.app.POJOS.Product;
 import com.app.POJOS.ProductDescription;
 import com.app.POJOS.ProductStatus;
 import com.app.POJOS.Remarks;
-import com.app.POJOS.Status;
 import com.app.POJOS.SubSubCategory;
 import com.app.POJOS.Supplier;
 import com.app.POJOS.User;
@@ -167,10 +166,9 @@ public class ProductServiceImpl implements ProductService {
 		    cartRepos.save(cart);
 		    return new ApiResponse("Product added to cart");
 	    }
-	    
-	    tempCart.setQuantity(cartDto.getQuantity());
-	    
-	    
+	   if(cartDto.getQuantity() == 1)
+	   tempCart.setQuantity(tempCart.getQuantity() + 1);
+	   else tempCart.setQuantity(tempCart.getQuantity() - 1);
 	    System.out.println(tempCart.getQuantity());
 	    return new ApiResponse("Product quantity changed to cart");
 	  }
@@ -307,5 +305,22 @@ public class ProductServiceImpl implements ProductService {
 			          return productDto;
 			        })
 			        .collect(Collectors.toList());
+	}
+
+	@Override
+	public ApiResponse removeProductFromCart(Long cartId) {
+		
+		cartRepos.deleteById(cartId);
+		return new ApiResponse("product has been deleted from cart");
+	}
+
+	@Override
+	public ProductDescription getDescription(Long prodId) {
+
+		//
+		Product product = prodRepos.findById(prodId).orElseThrow(()->new ResourceNotFoundException("invalid id") );
+		
+		//
+		return prodDescRepos.findByProduct(product);
 	}
 }

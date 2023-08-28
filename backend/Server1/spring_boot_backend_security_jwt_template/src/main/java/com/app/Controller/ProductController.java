@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ import com.app.DTO.ProductDTO;
 import com.app.DTO.ProductDescDTO;
 import com.app.DTO.RemarkDTO;
 import com.app.POJOS.Product;
+import com.app.POJOS.ProductDescription;
 import com.app.Service.ProductService;
 
 @RestController
@@ -109,7 +111,7 @@ public class ProductController {
 
 	//
 	@PostMapping("/cart")
-	public ResponseEntity<?> addToCart(CartDTO cartDto) {
+	public ResponseEntity<?> addToCart(@RequestBody CartDTO cartDto) {
 		return ResponseEntity.status(HttpStatus.OK).body(prodService.addProductToCart(cartDto));
 	}
 
@@ -140,7 +142,17 @@ public class ProductController {
 	  }
 	@GetMapping("/allProducts")
 	public ResponseEntity<?> getAllProducts(){
+		System.out.println("in controller ");
 		return ResponseEntity.status(HttpStatus.OK).body(prodService.getAllProduct());
+	}
+	@DeleteMapping("/remCart/{cartId}")
+	public ResponseEntity<?> removeProductFromCart(@PathVariable Long cartId){
+		System.out.println("jhcxvksv");
+		return ResponseEntity.status(HttpStatus.OK).body(prodService.removeProductFromCart(cartId));
+	}
+	@GetMapping("/description/{prodId}")
+	public ProductDescription getProdDescription(@PathVariable Long prodId) {
+		return prodService.getDescription(prodId);
 	}
 	
 }

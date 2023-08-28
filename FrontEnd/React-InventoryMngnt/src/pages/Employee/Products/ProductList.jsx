@@ -7,16 +7,24 @@ function ProductList() {
   const [products, setProduct] = useState([]);
   const navigate = useNavigate();
     
+  //
+  const upStockProduct = (productId)=>{
+      
+  }
+  //
+  const getData=()=>{
+     // userId and sellerId must be same
+     axios.get("http://127.0.0.1:8080/product/allProducts/"+sessionStorage.getItem("userId"))
+     .then((result) =>{
+       console.log(result.data)
+       setProduct(result.data)
+     })
+     .catch(err => console.log("err occured"))
+  }
 
   //
   useEffect(()=>{
-    // userId and sellerId must be same
-    axios.get("http://127.0.0.1:8080/product/allProducts/"+sessionStorage.getItem("userId"))
-    .then((result) =>{
-      console.log(result.data)
-      setProduct(result.data)
-    })
-    .catch(err => console.log("err occured"))
+   getData()
   },[])
 
   //
@@ -24,7 +32,7 @@ function ProductList() {
     axios.get("http://127.0.0.1:8080/product/delete/"+productId)
           .then(res=>{
             console.log(res.data)
-            navigate("/allProduct")
+            getData()
           })
           .catch(err => console.log(err))
   }
@@ -34,6 +42,8 @@ function ProductList() {
       <hr />
       <div>
         <td>
+        <Link to='/shop' className='btn btn-primary mb-2' style={{marginRight:"10px"}}>Back To Shop</Link> 
+        
         <Link to='/addProduct' className='btn btn-primary mb-2'>
           Add Product
         </Link>
@@ -67,6 +77,10 @@ function ProductList() {
                 <td>
                 <input className='btn btn-outline-danger ml-2' type='button' 
                   value="DELETE" onClick={() => deleteProduct(product.id)} />
+                </td>
+                <td>
+                <input className='btn btn-outline-info ml-2' type='button' 
+                  value="STOCK UP" onClick={() => upStockProduct(product.id)} />
                 </td>
               </tr>
                 ))}
