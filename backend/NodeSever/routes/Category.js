@@ -18,19 +18,23 @@ var connection =mysql.createConnection({
        appForcategory.get("/",(request,response) =>{
     connection.query("select * from categories",(error,result) =>
     {
-        if(error==null)
-        {
-            var data = JSON.stringify(result)
-            response.setHeader("Content-Type","application/json");
-            response.write(data);
+        try {
+            if(error==null)
+            {
+                var data = JSON.stringify(result)
+                response.setHeader("Content-Type","application/json");
+                response.write(data);
+            }
+            else
+            {
+                console.log(error);
+                response.setHeader("Content-Type","application/json");
+                response.write(error);
+            }
+            response.end();
+        } catch (error) {
+            console.error('An error occurred:', error.message);
         }
-     else
-        {
-            console.log(error);
-            response.setHeader("Content-Type","application/json");
-            response.write(error);
-        }
-        response.end();
     })
 })
 
@@ -40,19 +44,23 @@ appForcategory.post("/",(request,response) =>{
     var query =    `insert into categories (name) values ('${request.body.name}')`;
     connection.query(query,(error,result) =>
     {
+        try {
         if(error==null)
         {
             var data = JSON.stringify(result)
             response.setHeader("Content-Type","application/json");
             response.write(data);
         }
-     else
+        else
         {
             console.log(error);
             response.setHeader("Content-Type","application/json");
             response.write(error);
         }
         response.end();
+        } catch (error) {
+            console.error('An error occurred:', error.message);
+        }
     })
 })
 
@@ -62,7 +70,8 @@ appForcategory.put("/:id",(request,response) =>{
     var query = `update categories set name = '${request.body.name}' where id=${request.params.id}`;
     connection.query(query,(error,result) =>
     {
-        if(error==null)
+        try {
+            if(error==null)
         {
             var data = JSON.stringify(result)
             response.setHeader("Content-Type","application/json");
@@ -75,6 +84,9 @@ appForcategory.put("/:id",(request,response) =>{
             response.write(error);
         }
         response.end();
+        } catch (error) {
+            console.error('An error occurred:', error.message);
+        }
     })
 })
 
@@ -84,6 +96,7 @@ appForcategory.delete("/:id",(request,response) =>{
     var query = `delete from categories where id = ${request.params.id}`;
     connection.query(query,(error,result) =>
     {
+       try {
         if(error==null)
         {
             var data = JSON.stringify(result)
@@ -97,6 +110,9 @@ appForcategory.delete("/:id",(request,response) =>{
             response.write(error);
         }
         response.end();
+       } catch (error) {
+        console.error('An error occurred:', error.message);
+       }
     })
 })
 
