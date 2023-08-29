@@ -1,16 +1,19 @@
 const { error } = require("console");
 const express = require(`express`);
 const { request } = require("http");
-const mysql = require(`mysql`)
+const mysql = require(`mysql2`);
+const config = require("config")
+
 const app = express();
 const appForsubsubcategory = express.Router();
 
-var connection =mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'manager',
-    database:'inventory_mgmt_system'
-});
+var connection = mysql.createConnection({
+    host: config.get("host"),
+    port:config.get('mysqlPort'),
+    user: config.get("user"),
+    password: config.get("password"),
+    database: config.get("database"),
+  });
 
     //EndPoint to get a list of All SUB SUB Categories
     //GET:localhost:5000/subsubcatgry

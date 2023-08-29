@@ -14,7 +14,7 @@ function AddCategory() {
     console.log(categories)
     
     //
-    axios.post("http://127.0.0.1:9999/catgry", categories)
+    axios.post("http://172.19.0.4:4000/catgry", categories)
              .then(result => {
               console.log("added successfully")
               setCategories({ name: ""})
