@@ -9,7 +9,8 @@ var connection =mysql.createConnection({
 });
 appForClass.get("/",(request,response)=>{
     connection.query("select * from suppliers",(error,result)=>{
-        if(error==null)
+        try {
+            if(error==null)
         {
             var data = JSON.stringify(result)
             response.setHeader("Content-Type","application/json");
@@ -21,11 +22,15 @@ appForClass.get("/",(request,response)=>{
             response.write(error);
         }
         response.end();
+        } catch (error) {
+            console.error('An error occurred:', error.message);
+        }
     })
 })
     appForClass.post("/",(request,response)=>{
-        var query=`insert into suppliers (email,mobile,name,status) values('${request.body.email}','${request.body.mobile}','${request.body.name}','PENDING')`
-        connection.query(query,(error,result)=>{
+        try {
+            var query=`insert into suppliers (email,mobile,name,status) values('${request.body.email}','${request.body.mobile}','${request.body.name}','PENDING')`
+            connection.query(query,(error,result)=>{
             if(error==null)
             {
                 var data =JSON.stringify(result)
@@ -39,10 +44,14 @@ appForClass.get("/",(request,response)=>{
             }
             response.end();
      })
+        } catch (error) {
+            console.error('An error occurred:', error.message);
+        }
 
  })
  
  appForClass.put("/:id",(request,response)=>{
+   try {
     var query=`update suppliers set email='${request.body.email}',mobile='${request.body.mobile}',name='${request.body.name}' where id=${request.params.id} `;
     connection.query(query,(error,result)=>
     {
@@ -58,9 +67,13 @@ appForClass.get("/",(request,response)=>{
             response.send();
         }
     })
+   } catch (error) {
+    console.error('An error occurred:', error.message);
+   }
  })
 
  appForClass.put("/approve/:id",(request,response)=>{
+   try {
     var query=`update suppliers set status='APPROVED' where id=${request.params.id} `;
     connection.query(query,(error,result)=>
     {
@@ -76,6 +89,9 @@ appForClass.get("/",(request,response)=>{
             response.send();
         }
     })
+   } catch (error) {
+    console.error('An error occurred:', error.message);
+   }
  })
 
 module.exports=appForClass;

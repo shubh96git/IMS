@@ -17,6 +17,7 @@ var connection =mysql.createConnection({
 //EndPOint For Adding a New SUBCategory
 //POST:localhost:5000/subcatgry/2
 appForsubcategory.post("/:id",(request,response) =>{
+   try {
     var query =    `insert into sub_categories (name,category_id) values ('${request.body.name}',${request.params.id})`;
     connection.query(query,(error,result) =>
     {
@@ -34,6 +35,9 @@ appForsubcategory.post("/:id",(request,response) =>{
         }
         response.end();
     })
+   } catch (error) {
+    console.error('An error occurred:', error.message);
+   }
 })
 
 	//EndPoint to get a list of All SUB Categories
@@ -41,7 +45,8 @@ appForsubcategory.post("/:id",(request,response) =>{
 	appForsubcategory.get("/",(request,response) =>{
 	connection.query("select * from sub_categories",(error,result) =>
 	{
-	if(error==null)
+	try {
+        if(error==null)
 	{
 	var data = JSON.stringify(result)
 	response.setHeader("Content-Type","application/json");
@@ -54,13 +59,17 @@ appForsubcategory.post("/:id",(request,response) =>{
 	response.write(error);
 	}
 	response.end();
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
 	})
 	})
 
 //EndPoint to get a list of All SUBCategories  where categoryID supplied
 //GET:localhost:5000/subcatgry/2
 appForsubcategory.get("/:id",(request,response) =>{
-    var query = `select * from sub_categories where category_id=${request.params.id}`;
+    try {
+        var query = `select * from sub_categories where category_id=${request.params.id}`;
     connection.query(query,(error,result) =>
     {
     if(error==null)
@@ -77,12 +86,16 @@ appForsubcategory.get("/:id",(request,response) =>{
     }
     response.end();
     })
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
 })
 
 //EndPoint for Editing Subcategory
 //PUT:localhost:5000/subcatgry/2/15
 appForsubcategory.put('/:category_id/:id',(request,response) =>{
-    var query = `update sub_categories set name = '${request.body.name}' where category_id=${request.params.category_id} and id =${request.params.id}`;
+    try {
+        var query = `update sub_categories set name = '${request.body.name}' where category_id=${request.params.category_id} and id =${request.params.id}`;
     connection.query(query,(error,result) =>
     {
         if(error==null)
@@ -99,12 +112,16 @@ appForsubcategory.put('/:category_id/:id',(request,response) =>{
         }
         response.end();
     })
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
 })
 
 //EndPoint For Deleting a Sub_Category
 //DELETE:localhost:5000/category/7 
 appForsubcategory.delete("/:category_id/:id",(request,response) =>{
-    var query = `delete from sub_categories where category_id=${request.params.category_id} and id = ${request.params.id}`;
+    try {
+        var query = `delete from sub_categories where category_id=${request.params.category_id} and id = ${request.params.id}`;
     connection.query(query,(error,result) =>
     {
         if(error==null)
@@ -121,6 +138,9 @@ appForsubcategory.delete("/:category_id/:id",(request,response) =>{
         }
         response.end();
     })
+    } catch (error) {
+        console.error('An error occurred:', error.message);
+    }
 })
 
 module.exports = appForsubcategory;

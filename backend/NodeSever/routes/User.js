@@ -12,7 +12,8 @@ appForUser.put("/approve/:id",(request,response)=>{
     var query=`update users set status = "APPROVED" where id = ${request.params.id}; `;
     connection.query(query,(error,result)=>
     {
-        if(error==null)
+        try {
+            if(error==null)
         {
             var data = JSON.stringify(result);
             response.setHeader("Content-Type","application/json");
@@ -22,6 +23,9 @@ appForUser.put("/approve/:id",(request,response)=>{
             console.log(error);
             response.setHeader("Content-Type","application/json")
             response.send();
+        }
+        } catch (error) {
+            console.error('An error occurred:', error.message);
         }
     })
  })
@@ -30,9 +34,11 @@ appForUser.put("/approve/:id",(request,response)=>{
     var query=`update users set status = "APPROVED" where id = ${request.params.id}; `;
     connection.query(query,(error,result)=>
     {
-        if(error==null)
+        try {
+            if(error==null)
         {
             var data = JSON.stringify(result);
+            console.log("in approve")
             response.setHeader("Content-Type","application/json");
             response.send(data);
         }
@@ -40,6 +46,9 @@ appForUser.put("/approve/:id",(request,response)=>{
             console.log(error);
             response.setHeader("Content-Type","application/json")
             response.send();
+        }
+        } catch (error) {
+            console.error('An error occurred:', error.message);
         }
     })
  })
@@ -48,7 +57,8 @@ appForUser.put("/approve/:id",(request,response)=>{
     var query=`update users set status = "REMOVED" where id = ${request.params.id}; `;
     connection.query(query,(error,result)=>
     {
-        if(error==null)
+        try {
+            if(error==null)
         {
             var data = JSON.stringify(result);
             response.setHeader("Content-Type","application/json");
@@ -58,6 +68,9 @@ appForUser.put("/approve/:id",(request,response)=>{
             console.log(error);
             response.setHeader("Content-Type","application/json")
             response.send();
+        }
+        } catch (error) {
+            console.error('An error occurred:', error.message);
         }
     })
  })
