@@ -13,7 +13,7 @@ function CategoryList() {
 
     const fetchCategoryList = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:9999/catgry'); 
+        const response = await axios.get('http://172.19.0.4:4000/catgry'); 
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching Category data:', error);

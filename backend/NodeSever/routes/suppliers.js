@@ -1,12 +1,17 @@
 const express = require('express');
 const appForClass= express.Router();
-const mysql = require('mysql');
-var connection =mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'manager',
-    database:'inventory_mgmt_system'
-});
+const mysql = require('mysql2');
+const config = require('config');
+
+
+var connection = mysql.createConnection({
+    host: config.get('host'),
+    port:config.get('mysqlPort'),
+    user: config.get("user"),
+    password: config.get("password"),
+    database: config.get("database"),
+  });
+
 appForClass.get("/",(request,response)=>{
     connection.query("select * from suppliers",(error,result)=>{
         try {

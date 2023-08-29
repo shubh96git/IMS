@@ -1,0 +1,9 @@
+{
+   
+    "PORT": 4000,
+    "host"     : "172.19.0.2",
+    "user"     : "shubham",
+    "mysqlPort":"3306",
+    "password" : "manager",
+    "database" : "inventory_mgmt_system"
+}

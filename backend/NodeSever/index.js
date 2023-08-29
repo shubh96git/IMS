@@ -1,6 +1,7 @@
 const express = require('express');
-const mysql = require(`mysql`)
+const mysql = require(`mysql2`);
 const app= express();
+const config = require(`config`)
 
 const supplierRelatedRoutes= require('./routes/suppliers');
 const supplierAddrsRelatedRoutes= require('./routes/supplier_addrs');
@@ -24,5 +25,7 @@ app.use('/subcatgry',subcategoryRoute);
 app.use('/subsubcatgry',subsubcategoryRoute)
 app.use('/users',userRelatedRoute)
 
-app.listen(9999,()=>{console.log("Server Started @9999")
-})
+const PortNo=config.get("PORT");
+app.listen(PortNo,()=>{
+    console.log("Server Started On Port : "+PortNo);
+});
